@@ -60,7 +60,7 @@ stage('Set service account env vars'){
 }
 
 def returnServiceAccounts(String serviceAccounts){
-      def credentials = [] //array of maps
+      def credentials = [] 
       def serviceAccounts = serviceAccounts.split(',')
         
 
