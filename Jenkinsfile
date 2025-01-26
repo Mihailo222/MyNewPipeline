@@ -26,7 +26,7 @@ stages {
     steps {
   
     sh('docker login --username $DOCKERHUB_SVC_USR --password $DOCKERHUB_SVC_PSW')
-    sh('rm /root/.docker/')
+    sh('rm  -rf /root/.docker')
     }
     }
 
