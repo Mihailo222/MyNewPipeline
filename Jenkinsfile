@@ -10,6 +10,7 @@ environment {
   for( String svc_acc : service_Accounts ){
   "DOCKERHUB_SVC_ACC_${svc_acc}"=credentials("$svc_acc")
   }
+ }
 }
 stages {
 
@@ -34,32 +35,4 @@ stages {
 
   
 }
-
 }
-
-
-
-def checkServiceAccount(String credentialsId){
-  
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
