@@ -54,9 +54,9 @@ stage('Set service account env vars'){
   }  
 }
 
-def returnServiceAccounts(String serviceAccounts){
+def returnServiceAccounts(String serviceAccountsString){
       def credentials = [] 
-      def serviceAccounts = serviceAccounts.split(',')
+      def serviceAccounts = serviceAccountsString.split(',')
         
 
       def counter = 1
