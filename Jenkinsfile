@@ -1,11 +1,13 @@
+String[] service_Accounts=["failing_sa","dockerhub-svc-account"]
 
 pipeline {
 
-agent {
+  agent {
   label 'agent1'
 }
 environment {
   DOCKERHUB_SVC=credentials('dockerhub-svc-account')
+
 }
 stages {
 
@@ -24,6 +26,7 @@ stages {
     steps {
   
     sh('docker login --username $DOCKERHUB_SVC_USR --password $DOCKERHUB_SVC_PSW')
+    sh('rm /root/.docker/')
     }
     }
 
