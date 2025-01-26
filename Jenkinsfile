@@ -6,8 +6,10 @@ pipeline {
   label 'agent1'
 }
 environment {
-  DOCKERHUB_SVC=credentials('dockerhub-svc-account')
-
+  script {
+  for( String svc_acc : service_Accounts ){
+  DOCKERHUB_SVC=credentials("$svc_acc")
+  }
 }
 stages {
 
@@ -34,3 +36,30 @@ stages {
 }
 
 }
+
+
+
+def checkServiceAccount(String credentialsId){
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
