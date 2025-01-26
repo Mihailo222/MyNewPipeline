@@ -89,7 +89,9 @@ def checkServiceAccount(String username, String password){
 
   String cmd="docker login --username \"${username}\" --password \"${password}\""
  def status=sh(script: """
-                  '#!/bin/sh -e\n' + $cmd
+                  set +x                   
+                  $cmd
+                  set -x
                   """,  returnStatus: true
                   )
     sh(script: """
