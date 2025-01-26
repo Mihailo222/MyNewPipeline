@@ -19,8 +19,10 @@ stages {
   }
 
   stage('Login to DockerHub'){
+    steps {
     sh('docker login --username $DOCKERHUB_SVC_USR --password $DOCKERHUB_SVC_PSW')
-  }
+    }
+    }
 
   
 }
