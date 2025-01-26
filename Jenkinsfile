@@ -79,7 +79,7 @@ def returnServiceAccounts(String serviceAccounts){
           "password":"${SVCPASSWD}"
         ]
         
-        credentials.putAt(counter-1, cred)
+        credentials.add(cred)
         }
         counter++
         }
