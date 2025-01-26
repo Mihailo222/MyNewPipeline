@@ -13,7 +13,7 @@ stages {
 
     steps{
      echo "Stage: ${env.STAGE_NAME}"
-      echo "DOCKERHUB_SVC: $DOCKERHUB_SVC"
+      echo "DOCKERHUB_SVC: $DOCKERHUB_SVC_USR"
       echo "DOCKERHUB_SVC_PWD: $DOCKERHUB_SVC_PSW"
     }
   }
