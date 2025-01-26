@@ -10,8 +10,10 @@ environment {
 stages {
 
   stage('Whoami'){
+
+    steps{
      echo "Stage: ${env.STAGE_NAME}"
-  
+    }
   }
 
   
