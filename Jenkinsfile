@@ -30,16 +30,17 @@ stages {
     }
     }*/
 
-  // sad ces posle ovoga da probas da ucitas ovo kao niz kredencijala tj. objekata tipa credential
   stage('Set service account env vars'){
      
     steps {
     script {
-  //    def credentials = []
+      //def credentials = [:] //posle ces da ih sve storujes u mapu dabudu prosledivi
       def serviceAccounts = env.SERVICE_ACCOUNTS.split(",")
       def counter = 1
-      serviceAccounts.each { svc_acc -> 
-        env."creds_${counter}" = credentials(svc_acc)
+      serviceAccounts.each { svc_acc ->
+        def creds = credentials(svc_acc.trim())
+        env."creds_${counter}_USR" = creds.username
+        env."creds_${counter}_PSW" = creds.password
         counter++
       }
     }
@@ -55,8 +56,8 @@ stages {
           echo "SA_2_USER: $creds_2_USR"
           echo "SA_2_PASSWD: $creds_2_PSW"*/
 
-          echo "SA_1 : $creds_1"
-          echo "SA_2 : $creds_2"
+          echo "SA_1_USR : $creds_1_USR"
+          echo "SA_2_PSW : $creds_2_PSW"
         }
   }
   
