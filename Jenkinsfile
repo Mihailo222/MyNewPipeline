@@ -71,7 +71,7 @@ def returnServiceAccounts(String serviceAccountsString){
     //    env."creds_${counter}_PSW" ="${SVCPASSWD}"
         
         def cred = [
-          "credentialsId":"${svc_acc}"
+          "credentialsId":"${svc_acc}",
           "username":"${SVCUSERNAME}",
           "password":"${SVCPASSWD}"
         ]
