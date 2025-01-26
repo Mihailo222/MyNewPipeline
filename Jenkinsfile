@@ -24,22 +24,22 @@ stages {
 
   /*stage('Login to DockerHub'){
     steps {
-  
     sh('docker login --username $DOCKERHUB_SVC_USR --password $DOCKERHUB_SVC_PSW')
     sh('rm  -rf /root/.docker')
     }
     }*/
-
+  
 stage('Set service account env vars'){
     steps {
     script {
       def serviceAccounts=returnServiceAccounts(env.SERVICE_ACCOUNTS)
+      findValidServiceAccount(serviceAccounts)
       
     }
   }
 }
 
- /* stage("See service accounts injected as pipeline environment variables"){
+  /*stage("See service accounts injected as pipeline environment variables"){
         steps {
           
           echo "SA_1 USER: $creds_1_USR"
@@ -54,6 +54,7 @@ stage('Set service account env vars'){
   }  
 }
 
+// accept service accounts and trnslate them into an array of maps
 def returnServiceAccounts(String serviceAccountsString){
       def credentials = [] 
       def serviceAccounts = serviceAccountsString.split(',')
@@ -70,6 +71,7 @@ def returnServiceAccounts(String serviceAccountsString){
     //    env."creds_${counter}_PSW" ="${SVCPASSWD}"
         
         def cred = [
+          "credentialsId":"${svc_acc}"
           "username":"${SVCUSERNAME}",
           "password":"${SVCPASSWD}"
         ]
@@ -81,6 +83,47 @@ def returnServiceAccounts(String serviceAccountsString){
   
 return credentials 
 }
+
+//check if service account is valid
+def checkServiceAccount(String username, String password){
+   
+ def status=sh(script: """
+                  docker login --username \"${username}\" --password \"${password}\"
+                  """,  returnStatus: true
+                  )
+    sh(script: """
+    rm -rf /root/.docker
+    """, returnStatus: false
+    )
+    return status
+}
+
+
+def findValidServiceAccount(def serviceAccounts) {
+  for ( def svc_acc : serviceAccounts ){
+    int status = checkServiceAccount(svc_acc.username, svc_acc.password)
+
+    if(status == 0){
+      echo "SUCCESSFULLY LOGGED IN WITH SERVICE ACCOUNT $svc_acc.credentialsId ."
+      env.SVC_CREDS_USR="$svc_acc.username"
+      env.SVC_CREDS_PSW="$svc_acc.password"
+      return
+    }
+    else {
+      echo "FAILED LOGGING IN WITH SERVICE ACCOUNT $svc_acc.credentialsId ."
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
