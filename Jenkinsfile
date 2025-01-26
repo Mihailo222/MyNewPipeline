@@ -34,7 +34,7 @@ stage('Set service account env vars'){
     script {
       def serviceAccounts=returnServiceAccounts(env.SERVICE_ACCOUNTS)
       findValidServiceAccount(serviceAccounts)
-      
+      // ODRADI DOCKER LOGIN PREKO KREDENCIJALA KOJI SU INJECTOVANI U NAS ENVIRONMENT
     }
   }
 }
