@@ -39,7 +39,7 @@ stages {
       def serviceAccounts = env.SERVICE_ACCOUNTS.split(",")
       def counter = 1
       serviceAccounts.each { svc_acc -> 
-        env."creds_${counter}" = credentials(svc_acc.trim())
+        env."creds_${counter}" = credentials(svc_acc)
         counter++
       }
     }
