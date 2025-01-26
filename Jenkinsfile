@@ -48,11 +48,15 @@ stages {
 
   stage("See service accounts injected as pipeline environment variables"){
         steps {
-          echo "SA_1 USER: $creds_1_USR"
+          
+        /*  echo "SA_1 USER: $creds_1_USR"
           echo "SA_1_PASSWD: $creds_1_PSW"
 
           echo "SA_2_USER: $creds_2_USR"
-          echo "SA_2_PASSWD: $creds_2_PSW"
+          echo "SA_2_PASSWD: $creds_2_PSW"*/
+
+          echo "SA_1 : $creds_1"
+          echo "SA_2 : $creds_2"
         }
   }
   
