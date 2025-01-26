@@ -32,7 +32,9 @@ stages {
 
   // sad ces posle ovoga da probas da ucitas ovo kao niz kredencijala tj. objekata tipa credential
   stage('Set service account env vars'){
-      script {
+     
+    steps {
+    script {
   //    def credentials = []
       def serviceAccounts = env.SERVICE_ACCOUNTS.split(",")
       def counter = 1
@@ -41,6 +43,7 @@ stages {
         counter++
       }
     }
+  }
   }
 
   stage("See service accounts injected as pipeline environment variables"){
