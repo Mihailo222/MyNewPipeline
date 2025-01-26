@@ -6,15 +6,12 @@ pipeline {
   label 'agent1'
 }
 environment {
-  script {
-  for( String svc_acc : service_Accounts ){
-  "DOCKERHUB_SVC_ACC_${svc_acc}"=credentials("$svc_acc")
-  }
- }
+  SERVICE_ACCOUNTS = "failing_sa,dockerhub-svc-account"
+  //DOCKERHUB_SVC_USR=credentials('dockerhub-svc-account')
 }
 stages {
 
-  stage('Whoami'){
+  /*stage('Whoami'){
 
     steps{
      echo "Stage: ${env.STAGE_NAME}"
@@ -23,16 +20,53 @@ stages {
       echo "DOCKERHUB_SVC: $DOCKERHUB_SVC_USR"
       echo "DOCKERHUB_SVC_PWD: $DOCKERHUB_SVC_PSW"
     }
-  }
+  }*/
 
-  stage('Login to DockerHub'){
+  /*stage('Login to DockerHub'){
     steps {
   
     sh('docker login --username $DOCKERHUB_SVC_USR --password $DOCKERHUB_SVC_PSW')
     sh('rm  -rf /root/.docker')
     }
+    }*/
+
+  // sad ces posle ovoga da probas da ucitas ovo kao niz kredencijala tj. objekata tipa credential
+  stage('Set service account env vars'){
+      script {
+  //    def credentials = []
+      def serviceAccounts = env.SERVICE_ACCOUNTS.split(",")
+      def counter = 1
+      serviceAccounts.each { svc_acc -> 
+        env."creds_${counter}" = credentials(svc_acc.trim())
+        counter++
+      }
     }
+  }
+
+  stage("See service accounts injected as pipeline environment variables"){
+        steps {
+          echo "SA_1 USER: $creds_1_USR"
+          echo "SA_1_PASSWD: $creds_1_PSW"
+
+          echo "SA_2_USER: $creds_2_USR"
+          echo "SA_2_PASSWD: $creds_2_PSW"
+        }
+  }
+  
+ }
+  
 
   
 }
-}
+
+
+
+
+
+
+
+
+
+
+
+
