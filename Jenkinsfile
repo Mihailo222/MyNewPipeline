@@ -30,27 +30,16 @@ stages {
     }
     }*/
 
-  stage('Set service account env vars'){
-     
+stage('Set service account env vars'){
     steps {
     script {
-      //def credentials = [:] //posle ces da ih sve storujes u mapu dabudu prosledivi
-      def serviceAccounts = env.SERVICE_ACCOUNTS.split(",")
-      def counter = 1
-      serviceAccounts.each { svc_acc ->
-        withCredentials([ 
-          usernamePassword(credentialsId: "${svc_acc}", usernameVariable: 'SVCUSERNAME', passwordVariable: 'SVCPASSWD')
-        ]){
-        env."creds_${counter}_USR"="${SVCUSERNAME}"
-        env."creds_${counter}_PSW" ="${SVCPASSWD}"
-        }
-        counter++
-      }
+      def serviceAccounts=returnServiceAccounts(env.SERVICE_ACCOUNTS)
+      
     }
   }
-  }
+}
 
-  stage("See service accounts injected as pipeline environment variables"){
+ /* stage("See service accounts injected as pipeline environment variables"){
         steps {
           
         /*  echo "SA_1 USER: $creds_1_USR"
@@ -62,7 +51,7 @@ stages {
           echo "SA_1_USR : $creds_1_USR"
           echo "SA_2_PSW : $creds_2_PSW"
         }
-  }
+  }*/
   
  }
   
@@ -70,11 +59,33 @@ stages {
   
 }
 
+def returnServiceAccounts(String serviceAccounts){
+      def credentials = [] //array of maps
+      def serviceAccounts = serviceAccounts.split(',')
+        
 
-
-
-
-
+      def counter = 1
+  
+      serviceAccounts.each { svc_acc ->
+      withCredentials([ 
+        usernamePassword(credentialsId: "${svc_acc}", usernameVariable: 'SVCUSERNAME', passwordVariable: 'SVCPASSWD')
+      ]){
+        
+    //    env."creds_${counter}_USR"="${SVCUSERNAME}"
+    //    env."creds_${counter}_PSW" ="${SVCPASSWD}"
+        
+        def cred = [
+          "username":"${SVCUSERNAME}",
+          "password":"${SVCPASSWD}"
+        ]
+        
+        credentials.putAt(counter-1, cred)
+        }
+        counter++
+        }
+  
+return credentials 
+}
 
 
 
