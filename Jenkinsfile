@@ -39,8 +39,8 @@ stages {
       def counter = 1
       serviceAccounts.each { svc_acc ->
         def creds = credentials(svc_acc.trim())
-        env."creds_${counter}_USR" = creds.username
-        env."creds_${counter}_PSW" = creds.password
+        env."creds_${counter}_USR" = creds.usernameVariable
+        env."creds_${counter}_PSW" = creds.passwordVariable
         counter++
       }
     }
