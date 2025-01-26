@@ -86,9 +86,10 @@ return credentials
 
 //check if service account is valid
 def checkServiceAccount(String username, String password){
-   
+
+  String cmd="docker login --username \"${username}\" --password \"${password}\""
  def status=sh(script: """
-                  docker login --username \"${username}\" --password \"${password}\"
+                  '#!/bin/sh -e\n' + $cmd
                   """,  returnStatus: true
                   )
     sh(script: """
