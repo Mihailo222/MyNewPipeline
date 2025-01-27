@@ -27,7 +27,7 @@ def returnServiceAccounts(String serviceAccountsString){
       def serviceAccounts = serviceAccountsString.split(',')
         
 
-      def counter = 1
+     
   
       serviceAccounts.each { svc_acc ->
       withCredentials([ 
@@ -42,7 +42,7 @@ def returnServiceAccounts(String serviceAccountsString){
         
         credentials.add(cred)
         }
-        counter++
+        
       }
   
 return credentials 
